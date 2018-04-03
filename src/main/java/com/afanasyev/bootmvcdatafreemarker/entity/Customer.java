@@ -5,6 +5,7 @@ import javax.persistence.Id;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
+import java.util.Objects;
 
 @Entity
 public class Customer {
@@ -75,5 +76,30 @@ public class Customer {
 
     public void setZip(String zip) {
         this.zip = zip;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getAddress(), getCity(), getName(), getState(), getZip());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Customer customer = (Customer) o;
+        return Objects.equals(getId(), customer.getId()) &&
+                Objects.equals(getAddress(), customer.getAddress()) &&
+                Objects.equals(getCity(), customer.getCity()) &&
+                Objects.equals(getName(), customer.getName()) &&
+                Objects.equals(getState(), customer.getState()) &&
+                Objects.equals(getZip(), customer.getZip());
+    }
+
+    @Override
+    public String toString() {
+        return String.format("Customer(id:%d, address:%s, city:%s, name:%s, state:%s, zip:%s",
+                id, address, city, name, state, zip);
     }
 }
